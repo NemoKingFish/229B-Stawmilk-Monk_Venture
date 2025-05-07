@@ -17,19 +17,22 @@ public class PlayerController2D : MonoBehaviour
     private Animator animator;
     private bool isFacingRight = true;
 
-    [SerializeField] private Slider healthBar;
+    //[SerializeField] private Slider healthBar;
+    [SerializeField] private HealthBarController healthBar;
 
     void Start()
     {   
         rb2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         move = Input.GetAxis("Horizontal");
-
+        healthBar.Initialize(hp);
+        /*
         if (healthBar != null)
         {
             healthBar.maxValue = hp;
             healthBar.value = hp;
         }
+        */
     }
 
     void Update()
@@ -50,6 +53,11 @@ public class PlayerController2D : MonoBehaviour
         {
             rb2d.AddForce(new Vector2(0f, JumpForce), ForceMode2D.Impulse);
             animator?.SetBool("isJumping", true);
+        }
+
+        if (hp == 0 )
+        {
+            Die();
         }
     }
     void FlipSprite()
@@ -82,6 +90,7 @@ public class PlayerController2D : MonoBehaviour
             isGrounded = false;
         }
     }
+    /*
     void TakeDamage(float damage)
     {
         hp -= damage;
@@ -96,6 +105,12 @@ public class PlayerController2D : MonoBehaviour
         {
             healthBar.value = hp;
         }
+    }
+    */
+    public void TakeDamage(float dmg)
+    {
+        hp -= dmg;
+        healthBar.TakeDamage(dmg);
     }
     void Die()
     {
