@@ -6536,7 +6536,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3846695476054750722, guid: 88b470e16e2f01a46bc7bfb3ec50d8a4, type: 3}
       propertyPath: m_EdgeRadius
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6783114669486827690, guid: 88b470e16e2f01a46bc7bfb3ec50d8a4, type: 3}
       propertyPath: m_SortingOrder
