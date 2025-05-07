@@ -17,8 +17,8 @@ public class PlayerController2D : MonoBehaviour
     private bool isFacingRight = true;
     [SerializeField] private HealthBarController healthBar;
 
-    public GameObject bulletPrefab;
-    public Transform firePoint;
+   // public GameObject bulletPrefab;
+    //public Transform firePoint;
 
     void Start()
     {   
@@ -52,33 +52,33 @@ public class PlayerController2D : MonoBehaviour
             
         }
 
-        if (Input.GetButtonDown("Fire1") && !isCooldown)
-        {
-            Shoot();
-            //animator.SetFloat("Throw",1f );
+        //if (Input.GetButtonDown("Fire1") && !isCooldown)
+        //{
+        //    Shoot();
+        //    //animator.SetFloat("Throw",1f );
             //animator?.SetBool("isThrowing", true);
-            Debug.Log("testkey");
-        }
+       //     Debug.Log("testkey");
+       // }
     }
     //flip
     void FlipSprite()
     {
         if (isFacingRight && move < 0f || !isFacingRight && move > 0f)
-        {
+       {
             isFacingRight = !isFacingRight;
             Vector3 ls = transform.localScale;
-            ls.x *= -1f;
+           ls.x *= -1f;
             transform.localScale = ls;
         }
     }
-
-    void Shoot()
-    {
-        Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+//
+  //  void Shoot()
+  //  {
+  //      Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
         //animator.SetFloat("Throw", -0f);
-        animator?.SetTrigger("Throw");
-        Debug.Log("testkey");
-    }
+ //       animator?.SetTrigger("Throw");
+  //      Debug.Log("testkey");
+ //   }
 
     //enter
     private void OnCollisionEnter2D(Collision2D other)
