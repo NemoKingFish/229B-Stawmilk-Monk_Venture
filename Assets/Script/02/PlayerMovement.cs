@@ -60,6 +60,7 @@ public class PlayerController2D : MonoBehaviour
             isGrounded = true;
             animator?.SetBool("isJumping", false);          
         }
+
         if (other.gameObject.CompareTag("Monster"))
         {
             TakeDamage(10f);
