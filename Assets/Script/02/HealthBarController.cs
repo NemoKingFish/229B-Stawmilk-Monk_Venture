@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class HealthBarController : MonoBehaviour
 {
-    [SerializeField] private Image fillImage;
+    /*[SerializeField] private Image fillImage;
     private float maxHp;
     private float currentHp;
 
@@ -34,6 +34,18 @@ public class HealthBarController : MonoBehaviour
         {
             fillImage.fillAmount = currentHp / maxHp;
         }
+    }
+    */
+
+    public Slider slider;
+    public Gradient gradient;
+    public Image fill;
+
+    public void SetMaxHealth(int health)
+    {
+        slider.maxValue = health;
+        slider.value = health;
+
     }
 }
 

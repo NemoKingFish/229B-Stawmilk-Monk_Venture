@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController2D : MonoBehaviour
 {
@@ -16,11 +17,19 @@ public class PlayerController2D : MonoBehaviour
     private Animator animator;
     private bool isFacingRight = true;
 
+    [SerializeField] private Slider healthBar;
+
     void Start()
     {   
         rb2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         move = Input.GetAxis("Horizontal");
+
+        if (healthBar != null)
+        {
+            healthBar.maxValue = hp;
+            healthBar.value = hp;
+        }
     }
 
     void Update()
@@ -81,6 +90,11 @@ public class PlayerController2D : MonoBehaviour
         if (hp <= 0)
         {
             Die();
+        }
+
+        if (healthBar != null)
+        {
+            healthBar.value = hp;
         }
     }
     void Die()
