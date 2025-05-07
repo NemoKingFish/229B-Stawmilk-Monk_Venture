@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PlayerController2D : MonoBehaviour
 {
-    [SerializeField] float hp;
+    [SerializeField] float hp = 100f;
     [SerializeField] float Speed;
     [SerializeField] float JumpForce;
     private float move;
@@ -15,17 +15,12 @@ public class PlayerController2D : MonoBehaviour
 
     private Animator animator;
     private bool isFacingRight = true;
-    [SerializeField] private HealthBarController healthBar;
-
-   // public GameObject bulletPrefab;
-    //public Transform firePoint;
 
     void Start()
     {   
         rb2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         move = Input.GetAxis("Horizontal");
-        healthBar.Initialize(hp);
     }
 
     void Update()
@@ -34,33 +29,20 @@ public class PlayerController2D : MonoBehaviour
 
         move = Input.GetAxis("Horizontal");
         rb2d.linearVelocity = new Vector2(move * Speed, rb2d.linearVelocity.y);
-        //null check
         if (animator != null)
         {
             animator.SetFloat("xVelocity", Mathf.Abs(rb2d.linearVelocity.x));
             animator.SetFloat("yVelocity", rb2d.linearVelocity.y);
             
         }
-        //flip
         FlipSprite();
 
-        //jump
         if (Input.GetButtonDown("Jump") && isGrounded)
-        {                                 //JumpForce            //Force
+        {
             rb2d.AddForce(new Vector2(0f, JumpForce), ForceMode2D.Impulse);
             animator?.SetBool("isJumping", true);
-            
         }
-
-        //if (Input.GetButtonDown("Fire1") && !isCooldown)
-        //{
-        //    Shoot();
-        //    //animator.SetFloat("Throw",1f );
-            //animator?.SetBool("isThrowing", true);
-       //     Debug.Log("testkey");
-       // }
     }
-    //flip
     void FlipSprite()
     {
         if (isFacingRight && move < 0f || !isFacingRight && move > 0f)
@@ -71,16 +53,6 @@ public class PlayerController2D : MonoBehaviour
             transform.localScale = ls;
         }
     }
-//
-  //  void Shoot()
-  //  {
-  //      Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-        //animator.SetFloat("Throw", -0f);
- //       animator?.SetTrigger("Throw");
-  //      Debug.Log("testkey");
- //   }
-
-    //enter
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Ground"))
@@ -88,8 +60,11 @@ public class PlayerController2D : MonoBehaviour
             isGrounded = true;
             animator?.SetBool("isJumping", false);          
         }
+        if (other.gameObject.CompareTag("Monster"))
+        {
+            TakeDamage(10f);
+        }
     }
-    //out
     private void OnCollisionExit2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Ground"))
@@ -97,11 +72,20 @@ public class PlayerController2D : MonoBehaviour
             isGrounded = false;
         }
     }
-
-    public void TakeDamage(float dmg)
+    void TakeDamage(float damage)
     {
-        hp -= dmg;
-        healthBar.TakeDamage(dmg);
+        hp -= damage;
+        Debug.Log("Player took damage! HP = " + hp);
+
+        if (hp <= 0)
+        {
+            Die();
+        }
+    }
+    void Die()
+    {
+        Debug.Log("Player died!");
+        Destroy(gameObject);
     }
 }
 

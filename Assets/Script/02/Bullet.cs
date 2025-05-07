@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
@@ -14,6 +14,5 @@ public class Bullet : MonoBehaviour
     {
         Destroy(gameObject, delay);
     }
-
 }
 
